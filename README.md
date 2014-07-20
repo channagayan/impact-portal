@@ -1,4 +1,4 @@
-# MifosX Community App
+# MifosX Client Impact Portal app
 
 This is the  web application built on top of the MifosX platform for the mifos impact portal. It is a Single-Page App (SPA) written in web standard technologies like JavaScript, CSS and HTML5. It leverages common popular frameworks/libraries such as AngularJS, Bootstrap and Font Awesome.
 
