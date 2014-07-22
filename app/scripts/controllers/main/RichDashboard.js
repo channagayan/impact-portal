@@ -83,184 +83,8 @@
                     }
                 }
             }
-            // retrieved 8 frequent actions
 
-            scope.searchParams = ['create client', 'clients', 'create group', 'groups', 'centers', 'create center', 'configuration', 'tasks', 'templates', 'system users',
-                'create template', 'create loan product', 'create saving product', 'roles', 'add role', 'configure maker checker tasks',
-                'users', 'loan products', 'charges', 'saving products', 'offices', 'create office', 'currency configurations', 'user settings',
-                'create user', 'employees', 'create employee', 'manage funds', 'offices', 'chart of accounts', 'frequent postings', 'Journal entry',
-                'search transaction', 'account closure', 'accounting rules', 'add accounting rule', 'data tables', 'create data table', 'add code',
-                'jobs', 'codes', 'reports', 'create report', 'holidays', 'create holiday', 'create charge', 'product mix', 'add member', 'add product mix',
-                'bulk loan reassignment', 'audit', 'create accounting closure', 'enter collection sheet', 'navigation', 'accounting', 'organization', 'system'
-            ];
-            scope.search = function () {
-                switch (this.formData.search) {
-                    case 'create client':
-                        location.path('/createclient');
-                        break;
-                    case 'clients':
-                        location.path('/clients');
-                        break;
-                    case 'create group':
-                        location.path('/creategroup');
-                        break;
-                    case 'groups':
-                        location.path('/groups');
-                        break;
-                    case 'create center':
-                        location.path('/createcenter');
-                        break;
-                    case 'centers':
-                        location.path('/centers');
-                        break;
-                    case 'configuration':
-                        location.path('/global');
-                        break;
-                    case 'tasks':
-                        location.path('/tasks');
-                        break;
-                    case 'templates':
-                        location.path('/templates');
-                        break;
-                    case 'create template':
-                        location.path('/createtemplate');
-                        break;
-                    case 'create loan product':
-                        location.path('/createloanproduct');
-                        break;
-                    case 'create saving product':
-                        location.path('/createsavingproduct');
-                        break;
-                    case 'roles':
-                        location.path('/admin/roles');
-                        break;
-                    case 'add role':
-                        location.path('/admin/addrole');
-                        break;
-                    case 'configure maker checker tasks':
-                        location.path('/admin/viewmctasks');
-                        break;
-                    case 'loan products':
-                        location.path('/loanproducts');
-                        break;
-                    case 'charges':
-                        location.path('/charges');
-                        break;
-                    case 'saving products':
-                        location.path('/savingproducts');
-                        break;
-                    case 'offices':
-                        location.path('/offices');
-                        break;
-                    case 'create office':
-                        location.path('/createoffice');
-                        break;
-                    case 'currency configurations':
-                        location.path('/currconfig');
-                        break;
-                    case 'user settings':
-                        location.path('/usersetting');
-                        break;
-                    case 'employees':
-                        location.path('/employees');
-                        break;
-                    case 'create employee':
-                        location.path('/createemployee');
-                        break;
-                    case 'manage funds':
-                        location.path('/managefunds');
-                        break;
-                    case 'chart of accounts':
-                        location.path('/accounting_coa');
-                        break;
-                    case 'frequent postings':
-                        location.path('/freqposting');
-                        break;
-                    case 'journal entry':
-                        location.path('/journalentry');
-                        break;
-                    case 'search transaction':
-                        location.path('/searchtransaction');
-                        break;
-                    case 'account closure':
-                        location.path('/accounts_closure');
-                        break;
-                    case 'accounting rules':
-                        location.path('/accounting_rules');
-                        break;
-                    case 'add accounting rule':
-                        location.path('/add_accrule');
-                        break;
-                    case 'data tables':
-                        location.path('/datatables');
-                        break;
-                    case 'create data table':
-                        location.path('/createdatatable');
-                        break;
-                    case 'add code':
-                        location.path('/addcode');
-                        break;
-                    case 'jobs':
-                        location.path('/jobs');
-                        break;
-                    case 'codes':
-                        location.path('/codes');
-                        break;
-                    case 'reports':
-                        location.path('/reports');
-                        break;
-                    case 'create report':
-                        location.path('/createreport');
-                        break;
-                    case 'holidays':
-                        location.path('/holidays');
-                        break;
-                    case 'create holiday':
-                        location.path('/createholiday');
-                        break;
-                    case 'add member':
-                        location.path('/addmember');
-                        break;
-                    case 'create charge':
-                        location.path('/createcharge');
-                        break;
-                    case 'enter collection sheet':
-                        location.path('/entercollectionsheet');
-                        break;
-                    case 'product mix':
-                        location.path('/productmix');
-                        break;
-                    case 'add product mix':
-                        location.path('/addproductmix');
-                        break;
-                    case 'bulk loan reassignment':
-                        location.path('/bulkloan');
-                        break;
-                    case 'audit':
-                        location.path('/audit');
-                        break;
-                    case 'create accounting closure':
-                        location.path('/createclosure');
-                        break;
-                    case 'navigation':
-                        location.path('/nav/offices');
-                        break;
-                    case 'accounting':
-                        location.path('/accounting');
-                        break;
-                    case 'organization':
-                        location.path('/organization');
-                        break;
-                    case 'system':
-                        location.path('/system');
-                        break;
-                    case 'system users':
-                        location.path('/admin/users');
-                        break;
-                    default:
-                        location.path('/home');
-                }
-            }
+
         	
             scope.client = [];
             scope.offices = [];
@@ -273,345 +97,7 @@
             scope.switch = function() {
 	        	location.path('/home');
 			}
-            
-            scope.formatdate = function () {
-                var bardate = new Date();
-                scope.formattedDate = [];
-                for (var i = 0; i < 12; i++) {
-                    var temp_date = bardate.getDate();
-                    bardate.setDate(temp_date - 1);
-                    var curr_date = bardate.getDate();
-                    var curr_month = bardate.getMonth() + 1;
-                    scope.formattedDate[i] = curr_date + "/" + curr_month;
-                }
-            };
-            scope.formatdate();
 
-            scope.getWeek = function () {
-                scope.formattedWeek = [];
-                var checkDate = new Date();
-                checkDate.setDate(checkDate.getDate() + 4 - (checkDate.getDay() || 7));
-                var time = checkDate.getTime();
-                checkDate.setMonth(0);
-                checkDate.setDate(1);
-                var week = Math.floor(Math.round((time - checkDate) / 86400000) / 7);
-                for (var i = 0; i < 12; i++) {
-                    if (week == 0) {
-                        week = 52;
-                    }
-                    scope.formattedWeek[i] = week - i;
-
-                }
-            };
-            scope.getWeek();
-
-            scope.getMonth = function () {
-                var today = new Date();
-                var aMonth = today.getMonth();
-                scope.formattedMonth = [];
-                var month = new Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
-                for (var i = 0; i < 12; i++) {
-                    scope.formattedMonth.push(month[aMonth]);
-                    aMonth--;
-                    if (aMonth < 0) {
-                        aMonth = 11;
-                    }
-                }
-            };
-            scope.getMonth();
-
-            scope.getBarData = function (firstData, secondClientData, secondLoanData) {
-                scope.BarData = [
-
-                    {
-                        "key": "New Client Joining",
-                        "values": [
-                            [ firstData[11] , secondClientData[11]] ,
-                            [ firstData[10] , secondClientData[10]] ,
-                            [ firstData[9] , secondClientData[9]] ,
-                            [ firstData[8] , secondClientData[8]] ,
-                            [ firstData[7] , secondClientData[7]] ,
-                            [ firstData[6] , secondClientData[6]] ,
-                            [ firstData[5] , secondClientData[5]] ,
-                            [ firstData[4] , secondClientData[4]] ,
-                            [ firstData[3] , secondClientData[3]] ,
-                            [ firstData[2] , secondClientData[2]] ,
-                            [ firstData[1] , secondClientData[1]] ,
-                            [ firstData[0] , secondClientData[0]]
-                        ]
-                    },
-                    {
-                        "key": "Loans Disbursed",
-                        "values": [
-                            [ firstData[11] , secondLoanData[11]] ,
-                            [ firstData[10] , secondLoanData[10]] ,
-                            [ firstData[9] , secondLoanData[9]] ,
-                            [ firstData[8] , secondLoanData[8]] ,
-                            [ firstData[7] , secondLoanData[7]] ,
-                            [ firstData[6] , secondLoanData[6]] ,
-                            [ firstData[5] , secondLoanData[5]] ,
-                            [ firstData[4] , secondLoanData[4]] ,
-                            [ firstData[3] , secondLoanData[3]] ,
-                            [ firstData[2] , secondLoanData[2]] ,
-                            [ firstData[1] , secondLoanData[1]] ,
-                            [ firstData[0] , secondLoanData[0]]
-                        ]
-                    }
-                ];
-            };
-
-            scope.getFcount = function (dateData, retrievedDateData, responseData) {
-                for (var i in dateData) {
-                    scope.fcount[i] = 0;
-                    for (var j in retrievedDateData) {
-                        if (dateData[i] == retrievedDateData[j]) {
-                            scope.fcount[i] = responseData[j].count;
-
-                        }
-                    }
-                }
-            };
-            scope.getLcount = function (dateData, retrievedDateData, responseData) {
-                for (var i in dateData) {
-                    scope.lcount[i] = 0;
-                    for (var j in retrievedDateData) {
-                        if (dateData[i] == retrievedDateData[j]) {
-                            scope.lcount[i] = responseData[j].lcount;
-
-                        }
-                    }
-                }
-            };
-
-            resourceFactory.runReportsResource.get({reportSource: 'ClientTrendsByDay', R_officeId: 1, genericResultSet: false}, function (clientData) {
-                scope.client = clientData;
-                scope.days = [];
-                scope.tempDate = [];
-                scope.fcount = [];
-                for (var i in scope.client) {
-                    scope.days[i] = scope.client[i].days;
-                }
-                for (var i in scope.days) {
-                    if (scope.days[i] && scope.days[i].length > 2) {
-                        var tday = scope.days[i][2];
-                        var tmonth = scope.days[i][1];
-                        var tyear = scope.days[i][0];
-                        scope.tempDate[i] = tday + "/" + tmonth;
-                    }
-                }
-                scope.getFcount(scope.formattedDate, scope.tempDate, scope.client);
-                resourceFactory.runReportsResource.get({reportSource: 'LoanTrendsByDay', R_officeId: 1, genericResultSet: false}, function (loanData) {
-                    scope.ldays = [];
-                    scope.ltempDate = [];
-                    scope.lcount = [];
-                    for (var i in loanData) {
-                        scope.ldays[i] = loanData[i].days;
-                    }
-                    for (var i in scope.ldays) {
-                        if (scope.ldays[i] && scope.ldays[i].length > 2) {
-                            var tday = scope.ldays[i][2];
-                            var tmonth = scope.ldays[i][1];
-                            var tyear = scope.ldays[i][0];
-                            scope.ltempDate[i] = tday + "/" + tmonth;
-                        }
-                    };
-                    scope.getLcount(scope.formattedDate, scope.ltempDate, loanData);
-                    scope.getBarData(scope.formattedDate, scope.fcount, scope.lcount);
-                });
-            });
-
-            resourceFactory.groupTemplateResource.get(function (data) {
-                scope.offices = data.officeOptions;
-            });
-
-            resourceFactory.runReportsResource.get({reportSource: 'Demand_Vs_Collection', R_officeId: 1, genericResultSet: false}, function (data) {
-                if (data && data.length > 0) {
-                    scope.collectionPieData = data[0];
-                    //scope.showCollectionerror = false;
-                    if (data[0].AmountPaid == 0 && data[0].AmountDue == 0) {
-                       // scope.showCollectionerror = true;
-                    }
-                   // scope.collectedData = [
-                   //     {key: "Collected", y: scope.collectionPieData.AmountPaid},
-                   //     {key: "Pending", y: scope.collectionPieData.AmountDue}
-                   // ];
-                } else{
-                    //scope.showCollectionerror = true;
-                };
-            });
-            resourceFactory.runReportsResource.get({reportSource: 'Disbursal_Vs_Awaitingdisbursal', R_officeId: 1, genericResultSet: false}, function (data) {
-                if (data && data.length > 0) {
-                    scope.disbursedPieData = data[0];
-                    scope.showDisbursementerror = false;
-                    if (data[0].disbursedAmount == 0 && data[0].amountToBeDisburse == 0) {
-                        scope.showDisbursementerror = true;
-                    }
-                    scope.disbursedData = [
-                        {key: "Disbursed", y: scope.disbursedPieData.disbursedAmount},
-                        {key: "Pending", y: scope.disbursedPieData.amountToBeDisburse}
-                    ];
-                } else{
-                    scope.showDisbursementerror = true;
-                };
-            });
-
-            scope.getDailyData = function () {
-                scope.chartType = 'Days';
-                scope.id = this.officeId || 1;
-                resourceFactory.runReportsResource.get({reportSource: 'ClientTrendsByDay', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                    scope.client = data;
-                    scope.days = [];
-                    scope.tempDate = [];
-                    scope.fcount = [];
-                    for (var i in scope.offices) {
-                        if (scope.offices[i].id == scope.id) {
-                            scope.bOfficeName = scope.offices[i].name;
-                        }
-                    }
-                    for (var i in scope.client) {
-                        scope.days[i] = scope.client[i].days;
-                    }
-                    for (var i in scope.days) {
-                        if (scope.days[i] && scope.days[i].length > 2) {
-                            var tday = scope.days[i][2];
-                            var tmonth = scope.days[i][1];
-                            var tyear = scope.days[i][0];
-                            scope.tempDate[i] = tday + "/" + tmonth;
-                        }
-                    }
-                    scope.getFcount(scope.formattedDate, scope.tempDate, scope.client);
-                    resourceFactory.runReportsResource.get({reportSource: 'LoanTrendsByDay', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                        scope.ldays = [];
-                        scope.ltempDate = [];
-                        scope.lcount = [];
-                        for (var i in data) {
-                            scope.ldays[i] = data[i].days;
-                        }
-                        for (var i in scope.ldays) {
-                            if (scope.ldays[i] && scope.ldays[i].length > 2) {
-                                var tday = scope.ldays[i][2];
-                                var tmonth = scope.ldays[i][1];
-                                var tyear = scope.ldays[i][0];
-                                scope.ltempDate[i] = tday + "/" + tmonth;
-                            }
-                        }
-                        scope.getLcount(scope.formattedDate, scope.ltempDate, data);
-                        scope.getBarData(scope.formattedDate, scope.fcount, scope.lcount);
-                    });
-                });
-            };
-
-            scope.getWeeklyData = function () {
-                scope.chartType = 'Weeks';
-                scope.id = this.officeId || 1;
-                resourceFactory.runReportsResource.get({reportSource: 'ClientTrendsByWeek', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                    scope.client = data;
-                    scope.weeks = [];
-                    scope.fcount = [];
-
-                    for (var i in scope.offices) {
-                        if (scope.offices[i].id == scope.id) {
-                            scope.bOfficeName = scope.offices[i].name;
-                        }
-                    }
-                    for (var i in scope.client) {
-                        scope.weeks[i] = scope.client[i].Weeks;
-                    }
-
-                    scope.getFcount(scope.formattedWeek, scope.weeks, scope.client);
-                    resourceFactory.runReportsResource.get({reportSource: 'LoanTrendsByWeek', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                        scope.lweeks = [];
-                        scope.lcount = [];
-                        for (var i in data) {
-                            scope.lweeks[i] = data[i].Weeks;
-                        }
-                        scope.getLcount(scope.formattedWeek, scope.lweeks, data);
-                        scope.getBarData(scope.formattedWeek, scope.fcount, scope.lcount);
-                    });
-                });
-            };
-
-            scope.getMonthlyData = function () {
-                scope.chartType = 'Months';
-                scope.id = this.officeId || 1;
-                scope.formattedSMonth = [];
-                var monthArray = new Array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
-                var today = new Date();
-                var aMonth = today.getMonth();
-                for (var i = 0; i < 12; i++) {
-                    scope.formattedSMonth.push(monthArray[aMonth]);
-                    aMonth--;
-                    if (aMonth < 0) {
-                        aMonth = 11;
-                    }
-                }
-                resourceFactory.runReportsResource.get({reportSource: 'ClientTrendsByMonth', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                    scope.client = data;
-                    scope.months = [];
-                    scope.fcount = [];
-
-                    for (var i in scope.offices) {
-                        if (scope.offices[i].id == scope.id) {
-                            scope.bOfficeName = scope.offices[i].name;
-                        }
-                    }
-                    for (var i in scope.client) {
-                        scope.months[i] = scope.client[i].Months;
-                    }
-                    scope.getFcount(scope.formattedMonth, scope.months, scope.client);
-                    resourceFactory.runReportsResource.get({reportSource: 'LoanTrendsByMonth', R_officeId: scope.id, genericResultSet: false}, function (data) {
-                        scope.lmonths = [];
-                        scope.lcount = [];
-
-                        for (var i in data) {
-                            scope.lmonths[i] = data[i].Months;
-                        }
-                        scope.getLcount(scope.formattedMonth, scope.lmonths, data);
-                        scope.getBarData(scope.formattedSMonth, scope.fcount, scope.lcount);
-                    });
-                });
-            };
-            scope.getCollectionOffice = function () {
-                var id = this.officeIdCollection || 1;
-                for (var i in scope.offices) {
-                    if (scope.offices[i].id == id) {
-                        scope.cOfficeName = scope.offices[i].name;
-                    }
-                }
-                resourceFactory.runReportsResource.get({reportSource: 'Demand_Vs_Collection', R_officeId: this.officeIdCollection, genericResultSet: false}, function (data) {
-                   // scope.showCollectionerror = false;
-                    scope.collectionPieData = data[0];
-                    if (data[0].AmountPaid == 0 && data[0].AmountDue == 0) {
-                       // scope.showCollectionerror = true;
-                    }
-                    //scope.collectedData = [
-                       // {key: "Collected", y: scope.collectionPieData.AmountPaid},
-                       // {key: "Pending", y: scope.collectionPieData.AmountDue}
-                   // ];
-
-                });
-
-            };
-            scope.getDisbursementOffice = function () {
-                var id = this.officeIdDisbursed || 1;
-                for (var i in scope.offices) {
-                    if (scope.offices[i].id == id) {
-                        scope.dOfficeName = scope.offices[i].name;
-                    }
-                }
-
-                resourceFactory.runReportsResource.get({reportSource: 'Disbursal_Vs_Awaitingdisbursal', R_officeId: this.officeIdDisbursed, genericResultSet: false}, function (data) {
-                    scope.disbursedPieData = data[0];
-                    scope.showDisbursementerror = false;
-                    if (data[0].disbursedAmount == 0 && data[0].amountToBeDisburse == 0) {
-                        scope.showDisbursementerror = true;
-                    }
-                    scope.disbursedData = [
-                        {key: "Collected", y: scope.disbursedPieData.disbursedAmount},
-                        {key: "Pending", y: scope.disbursedPieData.amountToBeDisburse}
-                    ];
-                });
-            };
 
             scope.xFunction = function () {
                 return function (d) {
@@ -624,7 +110,7 @@
                 };
             };
             var colorArray = ['#0f82f5', '#008000', '#808080', '#000000', '#FFE6E6'];
-            var colorArrayPie = ['#008000', '#ff4500'];
+            var colorArrayPie = ['#008000', '#ff4500','#0f82f5', '#008000', '#808080', '#000000', '#FFE6E6'];
             scope.colorFunction = function () {
                 return function (d, i) {
                     return colorArray[i];
@@ -635,61 +121,70 @@
                     return colorArrayPie[i];
                 };
             };
-            var tenantNames=["internaldemo","default"];
-            scope.showCollectionerror = false;
-           // scope.collectedData = [
-            //    {key: "Collected", y: 20},
-            //    {key: "Pending", y: 80}
-           // ];
-            //scope.collectedData=[{key:"collectedData"}];
-            //scope.collectedData.push({key:"def4ault",y:20});
-            //scope.collectedData.push({key:"balla",y:30});
-           // scope.collectedData.push({key:"balss",y:34});
-            //var collectedDatatemp=[{key:"haraka",y:12}];
-            //var ibba=[{key:"ibba"}];
+            scope.data22= [
+                {
+                    "key" : "Quantity" ,
+                    "values" : [ [ 1 , 1, 'EGG1'] , [ 2 , 2, 'EGG2'] , [ 3 , 3, 'EGG3'] , [ 4 , 10, 'EGG4'] ,[ 5 , 10, 'EGG5'],[ 1 , 1, 'EGG6'] , [ 2 , 2, 'EGG7'] , [ 3 , 3, 'EGG8'] , [ 4 , 10, 'EGG9'] ]
+                },
+                {
+                    "key" : "Quantity2" ,
+                    "values" : [ [ 1 , 5, 'EGG1'] , [ 2 , 6, 'EGG2'] , [ 3 , 2, 'EGG3'] , [ 4 , 8, 'EGG4'] ,[ 5 , 9, 'EGG5'],[ 1 , 5, 'EGG6'] , [ 2 ,6, 'EGG7'] , [ 3 , 2, 'EGG8'] , [ 4 , 9, 'EGG9'] ]
+                }
+            ].map(function(series) {
+                    series.values = series.values.map(function(d) { return {x: d[0], y: d[1], label1: d[2] } });
+                    return series;
+                });
+            scope.clientsPieData=[
+                { key: "One", y: 5 },
+                { key: "Two", y: 2 },
+                { key: "Three", y: 9 },
+                { key: "Four", y: 7 },
+                { key: "Five", y: 4 },
+                { key: "Six", y: 3 },
+                { key: "Seven", y: 9 }
+            ];
 
-            scope.getpiedata=function(tenant){
-                //var ibba=[{key:"ibba",y:5}];
-                var ibba=null;
-          //for(var i=0;i<tenantNames.length;i++){
-            resourceFactory.noOfClientsResource.get({reportDate:'2014-07-08',reportName:'Number of Clients',tenantIdentifier:tenant},function (data) {
-            //collectedDatatemp.push({key:data.tenantIdentifier,y:parseInt(data.dataPointValues[0].dataPointValues[0])});
-                //scope.collectedDatatemp.push({key:"balsdffdss",y:33})
-                //scope.setPieData("ll");
+            ////this is for line chart
+            nv.addGraph(function() {
+                var chart = nv.models.lineChart()
+                        .useInteractiveGuideline(true)
+                    ;
+                
+                chart.width(700);
+                chart.margin({left:100});
+                chart.color(['#2ca02c', 'darkred']);
+                chart.x(function(d,i) { return i })
+                ;
+                chart.xAxis
+                    .axisLabel('X axis')
+                    .tickFormat(function(d) {
+                        var label = scope.data22[0].values[d].label1;
+                        return label;
+                    })
+                ;
+                chart.yAxis
+                    .axisLabel('Y axis')
+                    .tickFormat(function(d){
+                        return d3.format(',f')(d);
+                    })
+                ;
 
-                ibba=  data.tenantIdentifier;
-                //ibba.push({key:data.tenantIdentifier,y:parseInt(data.dataPointValues[0].dataPointValues[0])});
-                //scope.$apply();
-                //scope.setPieData(data.tenantIdentifier);
+                d3.select('#chart svg')
+                    .datum(scope.data22)
+                    .transition().duration(500)
+                    .call(chart)
+                ;
+
+                nv.utils.windowResize(chart.update);
+
+                return chart;
             });
-              //scope.collectedData.push(scope.collectedDatatemp.pop());
-            //}
-                return ibba;
-            }
-            scope.collectedData1=[{key:"balla",y:56}];
-            for(var i=0;i<tenantNames.length;i++){
-                //scope.collectedData.push(scope.getpiedata(tenantNames[i]));
-            }
-            console.log(scope.collectedData1);
-            //console.log(collectedDatatemp);
-//console.log(scope.getpiedata());
-            //var miharaka=scope.getpiedata();
-            //scope.collectedData=miharaka;
-            //for(var i=0;i<ibba.length;i++){
-             //   scope.collectedData.push(ibba[i]);
-                //scope.collectedData.push(collectedDatatemp.pop());
-           // }
-            //scope.$timeout(scope.setPieData, 1000);
-            //scope.setPieData("ll");
-            //console.log(collectedDatatemp);
-            //scope.collectedData=scope.collectedDatatemp;
-            //console.log(scope.collectedData);
-           // scope.collectedData=scope.collectedDatatemp;
-            //scope.setPieData=function(tenant){
-            //console.log(scope.collectedData);
-            //console.log(ibba);
-           // };
-            //scope.collectedData.push({key:"two",y:10});
+
+
+
+            ////////end of line chart/////////////
+//console.log(scope.noOfClientsChartData);
+
 
         }
     });

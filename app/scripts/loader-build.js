@@ -81,7 +81,8 @@
                     'ngCsv',
                     'chosen.jquery.min',
                     'frAngular',
-                    'Q'
+                    'Q',
+                    'nvd3'
                 ],
                 exports: 'mifosX'
             }

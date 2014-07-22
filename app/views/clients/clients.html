@@ -27,16 +27,11 @@
                                 class="icon-table"></i>{{'label.button.day' | translate}}
                         </button>
                     </div>
-                    <div style="height:250px;">
-                        <nvd3-multi-bar-chart
-                                data="BarData"
-                                id="barchart"
-                                width="800"
-                                height="380"
-                                color="colorFunction()"
-                                showLegend="true">
-                            <svg></svg>
-                        </nvd3-multi-bar-chart>
+                    <div style="height:250px;" id="chart">
+
+                                <svg></svg>
+
+
                     </div>
                 </div>
             </div>
@@ -56,8 +51,8 @@
                     <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
                     <div data-ng-show="!showCollectionerror" style="margin:-30px 40px 0;height: 310px;" >
                         <nvd3-pie-chart
-                                data="collectedData1"
-                                id="piechart1"
+                                data="clientsPieData"
+                                id="noOfClientsPieChart"
                                 width="380"
                                 height="420"
                                 x="xFunction()"
@@ -68,6 +63,7 @@
                                 color="colorFunctionPie()">
                             <svg height="230"></svg>
                         </nvd3-pie-chart>
+
                     </div>
                 </div>
             </div>
@@ -132,5 +128,8 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div ng-controller="RichDashboard">
+    <nvd3 options="noOfClientsChartOptions" data="noOfClientsChartData"></nvd3>
     </div>
 </div>

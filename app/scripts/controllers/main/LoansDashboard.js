@@ -133,7 +133,7 @@
                 });
             }
 
-            scope.setLoansData("internaldemo");
+            scope.setLoansData("default");
         }
     });
     mifosX.ng.application.controller('LoansDashboard', ['$scope', 'ResourceFactory', 'localStorageService', '$rootScope', '$location', mifosX.controllers.LoansDashboard]).run(function ($log) {
