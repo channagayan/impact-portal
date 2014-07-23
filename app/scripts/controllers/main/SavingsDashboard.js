@@ -136,6 +136,76 @@
                 });
             }
 
+            /////////////////////////////////////////////////////////////////////////////line chart for savnings/////////////////////////
+            function cleanResponse(resp) {
+                return JSON.parse(angular.toJson(resp));
+            };
+            //scope.totalLoanAmountData=[];
+            scope.setTotalSavingsAmount=function(tenantName) {
+                var tempSavingsData=[];
+                resourceFactory.savingsAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Savings amount', tenantIdentifier: tenantName}, function (data) {
+                    scope.savings = cleanResponse(data);
+                    scope.savingsValues=[];
+                    for (var i in scope.savings) {
+                        var totalSavingsInOneRecord=0;
+                        for(var j in scope.savings[i].dataPointValues){
+                            totalSavingsInOneRecord+=parseInt(scope.savings[i].dataPointValues[j].dataPointValues[0]);
+                        }
+                        //console.log(totalLoanInOneRecord);
+                        scope.savingsValues[i] = [1,totalSavingsInOneRecord, scope.savings[i].dateCaptured];
+                    }
+                    tempSavingsData.push({
+                        "key": scope.savings[0].tenantIdentifier,
+                        "values": scope.savingsValues
+                    });
+                    scope.totalSavingsAmountData=tempSavingsData.map(function (series) {
+                        series.values = series.values.map(function (d) {
+                            return {x: d[0], y: d[1], label1: d[2] }
+                        });
+                        return series;
+                    });
+
+                    redrawTotalSavingsAmountChart();
+                });
+
+            };
+
+
+
+
+            ////this is for line chart
+
+            function redrawTotalSavingsAmountChart() {
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .useInteractiveGuideline(true);
+                    chart.width(700);
+                    chart.margin({left:100});
+                    chart.color(['darkred', 'darkblue']);
+                    chart.x(function(d,i) { return i });
+                    chart.xAxis
+                        .axisLabel('Date')
+                        .tickFormat(function(d) {
+                            var label = scope.totalSavingsAmountData[0].values[d].label1;
+                            return label;
+                        });
+                    chart.yAxis
+                        .axisLabel('Savings Value')
+                        .tickFormat(function(d){
+                            return d3.format(',f')(d);
+                        });
+                    d3.select('#totalSavingsAmountchart svg')
+                        .datum(scope.totalSavingsAmountData)
+                        .transition().duration(500)
+                        .call(chart);;
+                    nv.utils.windowResize(chart.update);;
+                    return chart;
+                });
+            };
+
+
+            /////////////////////////////////////////////////////////////////////////////end of line chart for savings//////////////////
+            scope.setTotalSavingsAmount("default");
             scope.setSavingsData(scope.currentTenant);
             //console.log(scope.savingsData);
 
