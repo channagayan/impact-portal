@@ -1,5 +1,5 @@
 <div id="expertsearch" class="col-md-12" data-ng-controller="LoansDashboard">
-    <h3 class="paddedleft"><strong>{{'label.heading.dashboard' | translate}}</strong>
+    <h3 class="paddedleft"><strong>{{'label.heading.loans' | translate}}</strong>
     </h3>
     <hr/>
     <div class="clear"><br></div>
@@ -63,32 +63,31 @@
         </div>
     </div>
     <div id="home" class="row">
-        <div class="col-md-4">
+
+        <div class="col-sm-8 col-md-8">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title"><i class="icon-bolt"></i>{{'label.heading.recentactivities' | translate}}</h3>
+                    <h3 class="panel-title">{{'label.heading.totalloanamount' | translate}} {{currentTenant}} 
+                        <select ng-model="currentTenant" ng-options="tenantName for tenantName in tenantNames" ng-change="setTotalLoanAmount(currentTenant)"
+                                class="form-control input-small-tooltip pull-right">
+
+                        </select>
+                    </h3>
                 </div>
                 <div class="panel-body">
-                    <div class="list-group">
-                        <a href="#{{recent}}" data-ng-repeat="recent in recents" class="list-group-item">
-                            {{recent | UrlToString | translate}}</a>
+                    <div>
+
+                    </div>
+                    <div style="height:250px;" id="totalLoanAmountchart">
+
+                        <svg></svg>
+
+
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h3 class="panel-title"><i class="icon-laptop"></i>{{'label.heading.frequentactivities' | translate}}</h3>
-                </div>
-                <div class="panel-body">
-                    <div class="list-group">
-                        <a href="#{{freq}}" data-ng-repeat="freq in frequent" class="list-group-item">
-                            {{freq | UrlToString | translate}}</a>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">

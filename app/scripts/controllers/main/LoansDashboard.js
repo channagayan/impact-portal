@@ -127,12 +127,83 @@
                     for(var i in scope.loans.dataPointValues){
                         scope.loansValues[i]=[scope.loans.dataPointValues[i].dataPointValues[1],scope.loans.dataPointValues[i].dataPointValues[0]];
                     }
-                    console.log(tenantName);
+                    //console.log(tenantName);
                     scope.loansData=[{"key":data.tenantIdentifier,"values":scope.loansValues}];
 
                 });
             }
 
+
+            /////////////////////////////////////////////////////////////////////////////line chart for loans/////////////////////////
+            function cleanResponse(resp) {
+                return JSON.parse(angular.toJson(resp));
+            };
+            //scope.totalLoanAmountData=[];
+            scope.setTotalLoanAmount=function(tenantName) {
+                var tempLoanData=[];
+                resourceFactory.loanAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Outstanding loans', tenantIdentifier: tenantName}, function (data) {
+                    scope.loans = cleanResponse(data);
+                    scope.loanValues=[];
+                    for (var i in scope.loans) {
+                        var totalLoanInOneRecord=0;
+                        for(var j in scope.loans[i].dataPointValues){
+                             totalLoanInOneRecord+=parseInt(scope.loans[i].dataPointValues[j].dataPointValues[0]);
+                        }
+                        //console.log(totalLoanInOneRecord);
+                        scope.loanValues[i] = [1,totalLoanInOneRecord, scope.loans[i].dateCaptured];
+                    }
+                    tempLoanData.push({
+                        "key": scope.loans[0].tenantIdentifier,
+                        "values": scope.loanValues
+                    });
+                    scope.totalLoanAmountData=tempLoanData.map(function (series) {
+                        series.values = series.values.map(function (d) {
+                            return {x: d[0], y: d[1], label1: d[2] }
+                        });
+                        return series;
+                    });
+
+                    redrawTotalLoanAmountChart();
+                });
+
+            };
+
+
+
+
+            ////this is for line chart
+
+            function redrawTotalLoanAmountChart() {
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .useInteractiveGuideline(true);
+                    chart.width(700);
+                    chart.margin({left:100});
+                    chart.color(['#2ca02c', 'darkred']);
+                    chart.x(function(d,i) { return i });
+                    chart.xAxis
+                        .axisLabel('Date')
+                        .tickFormat(function(d) {
+                            var label = scope.totalLoanAmountData[0].values[d].label1;
+                            return label;
+                        });
+                    chart.yAxis
+                        .axisLabel('Loan Value')
+                        .tickFormat(function(d){
+                            return d3.format(',f')(d);
+                        });
+                    d3.select('#totalLoanAmountchart svg')
+                        .datum(scope.totalLoanAmountData)
+                        .transition().duration(500)
+                        .call(chart);;
+                    nv.utils.windowResize(chart.update);;
+                    return chart;
+                });
+            };
+
+
+            /////////////////////////////////////////////////////////////////////////////end of line chart for loans//////////////////
+            scope.setTotalLoanAmount("default");
             scope.setLoansData("default");
         }
     });

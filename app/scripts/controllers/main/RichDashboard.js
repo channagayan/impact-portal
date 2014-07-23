@@ -1,7 +1,8 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         RichDashboard: function (scope, resourceFactory, localStorageService, $rootScope, location) {
-        	
+            scope.tenantNames=["internaldemo","default"];
+            scope.currentTenant="default";
         	scope.recent = [];
             scope.recent = localStorageService.get('Location');
             scope.recentEight = [];
@@ -121,19 +122,6 @@
                     return colorArrayPie[i];
                 };
             };
-            scope.data22= [
-                {
-                    "key" : "Quantity" ,
-                    "values" : [ [ 1 , 1, 'EGG1'] , [ 2 , 2, 'EGG2'] , [ 3 , 3, 'EGG3'] , [ 4 , 10, 'EGG4'] ,[ 5 , 10, 'EGG5'],[ 1 , 1, 'EGG6'] , [ 2 , 2, 'EGG7'] , [ 3 , 3, 'EGG8'] , [ 4 , 10, 'EGG9'] ]
-                },
-                {
-                    "key" : "Quantity2" ,
-                    "values" : [ [ 1 , 5, 'EGG1'] , [ 2 , 6, 'EGG2'] , [ 3 , 2, 'EGG3'] , [ 4 , 8, 'EGG4'] ,[ 5 , 9, 'EGG5'],[ 1 , 5, 'EGG6'] , [ 2 ,6, 'EGG7'] , [ 3 , 2, 'EGG8'] , [ 4 , 9, 'EGG9'] ]
-                }
-            ].map(function(series) {
-                    series.values = series.values.map(function(d) { return {x: d[0], y: d[1], label1: d[2] } });
-                    return series;
-                });
             scope.clientsPieData=[
                 { key: "One", y: 5 },
                 { key: "Two", y: 2 },
@@ -143,48 +131,115 @@
                 { key: "Six", y: 3 },
                 { key: "Seven", y: 9 }
             ];
+            /////////////////////////////////////////////////////////////////pie chart////////////////////////////
+            function redrawPieChart() {
+                nv.addGraph(function () {
+                    var chart = nv.models.pieChart()
+                        .x(function (d) {
+                            return d.label
+                        })
+                        .y(function (d) {
+                            return d.value
+                        })
+                        .showLabels(true);
+                    chart.margin({top: 200});
+
+
+                    d3.select("#clientspiechart svg")
+                        .datum(scope.clientspieData)
+                        .transition().duration(350)
+                        .call(chart);
+
+                    return chart;
+                });
+            }
+            scope.clientspieData=[];
+            function setClientsPieData(){
+                for(var i in scope.tenantNames){
+            resourceFactory.noOfClientsResource.get({ reportDate:'2014-06-06', reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+
+                scope.clientspieData.push({
+                    "label": data.tenantIdentifier,
+                    "value" : data.dataPointValues[0].dataPointValues[0]
+                });
+                //console.log(scope.clientspieData);
+                redrawPieChart();
+            });
+                }
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
+            function cleanResponse(resp) {
+                return JSON.parse(angular.toJson(resp));
+            };
+
+            scope.getNoOfClients=function(tenantName) {
+                var data23= [];
+               // for (var j = 0; j < 2; j++) {
+                    //if(j==0)tenantName="default";
+                   // else tenantName="internaldemo";
+                    resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: tenantName}, function (data) {
+                        scope.noOfClients = cleanResponse(data);
+                        scope.clientsValues = [];
+                        for (var i in scope.noOfClients) {
+                            scope.clientsValues[i] = [1, parseInt(scope.noOfClients[i].dataPointValues[0].dataPointValues[0]), scope.noOfClients[i].dateCaptured];
+                        }
+                        data23.push({
+                            "key": scope.noOfClients[0].tenantIdentifier,
+                            "values": scope.clientsValues
+                        });
+
+                        scope.data23 = data23.map(function (series) {
+                            series.values = series.values.map(function (d) {
+                                return {x: d[0], y: d[1], label1: d[2] }
+                            });
+                            return series;
+                        });
+                        redrawClientslineChart();
+                        console.log(scope.data23);
+
+                    });
+
+                };
+
+
+
 
             ////this is for line chart
-            nv.addGraph(function() {
-                var chart = nv.models.lineChart()
-                        .useInteractiveGuideline(true)
-                    ;
-                
-                chart.width(700);
-                chart.margin({left:100});
-                chart.color(['#2ca02c', 'darkred']);
-                chart.x(function(d,i) { return i })
-                ;
-                chart.xAxis
-                    .axisLabel('X axis')
-                    .tickFormat(function(d) {
-                        var label = scope.data22[0].values[d].label1;
-                        return label;
-                    })
-                ;
-                chart.yAxis
-                    .axisLabel('Y axis')
-                    .tickFormat(function(d){
-                        return d3.format(',f')(d);
-                    })
-                ;
 
-                d3.select('#chart svg')
-                    .datum(scope.data22)
-                    .transition().duration(500)
-                    .call(chart)
-                ;
-
-                nv.utils.windowResize(chart.update);
-
-                return chart;
-            });
+            function redrawClientslineChart() {
+                nv.addGraph(function() {
+                    var chart = nv.models.lineChart()
+                        .useInteractiveGuideline(true);
+                    chart.width(700);
+                    chart.margin({left:50});
+                    chart.color(['#2ca02c', 'darkred']);
+                    chart.x(function(d,i) { return i });
+                    chart.xAxis
+                        .axisLabel('X axis')
+                        .tickFormat(function(d) {
+                            var label = scope.data23[0].values[d].label1;
+                            return label;
+                        });
+                    chart.yAxis
+                        .axisLabel('Y axis')
+                        .tickFormat(function(d){
+                            return d3.format(',f')(d);
+                        });
+                    d3.select('#chart svg')
+                        .datum(scope.data23)
+                        .transition().duration(500)
+                        .call(chart);;
+                    nv.utils.windowResize(chart.update);;
+                    return chart;
+                });
+            };
 
 
 
-            ////////end of line chart/////////////
-//console.log(scope.noOfClientsChartData);
-
+            scope.getNoOfClients(scope.currentTenant);
+            setClientsPieData();
 
         }
     });

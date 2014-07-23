@@ -1,5 +1,5 @@
 <div id="expertsearch" class="col-md-12" data-ng-controller="RichDashboard">
-    <h3 class="paddedleft"><strong>{{'label.heading.dashboard' | translate}}</strong>
+    <h3 class="paddedleft"><strong>{{'label.heading.clients' | translate}}</strong>
     </h3>
     <hr/>
     <div class="clear"><br></div>
@@ -8,10 +8,9 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{'label.heading.clienttrendsfor' | translate}} {{bOfficeName}} ({{chartType}})
-                        <select class="form-control input-small-tooltip pull-right" name="office1" ng-change="getDailyData()"
-                                id="office1" ng-model="officeId"
-                                data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
+                        <select ng-model="currentTenant" ng-options="tenantName for tenantName in tenantNames" ng-change="getNoOfClients(currentTenant)"
+                                class="form-control input-small-tooltip pull-right">
+
                         </select>
                     </h3>
                 </div>
@@ -40,30 +39,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h3 class="panel-title">{{'label.heading.noofclients' | translate}}
-                        <select class="form-control input-small-tooltip pull-right" name="office1" ng-change="getCollectionOffice()"
-                                id="office1" ng-model="officeIdCollection"
-                                data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
-                        </select>
+
                     </h3>
                 </div>
                 <div class="panel-body" style="min-height:310px;">
                     <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
-                    <div data-ng-show="!showCollectionerror" style="margin:-30px 40px 0;height: 310px;" >
-                        <nvd3-pie-chart
-                                data="clientsPieData"
-                                id="noOfClientsPieChart"
-                                width="380"
-                                height="420"
-                                x="xFunction()"
-                                y="yFunction()"
-                                tooltips="true"
-                                donut="true"
-                                donutRatio=".015"
-                                color="colorFunctionPie()">
-                            <svg height="230"></svg>
-                        </nvd3-pie-chart>
-
+                    <div  style="margin:0px 40px 0;height: 310px;" id="clientspiechart">
+                            <svg></svg>
                     </div>
                 </div>
             </div>

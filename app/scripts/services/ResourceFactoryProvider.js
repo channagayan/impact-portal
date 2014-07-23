@@ -391,6 +391,12 @@
                     }),
                     loansResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
+                    }),
+                    noOfClientsByDateResource: defineResource(apiVer + "/client_impact_portal/reportByDateRange", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
+                        get: {method: 'GET', params: {},isArray: true,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
+                    }),
+                    loanAmountByDateResource: defineResource(apiVer + "/client_impact_portal/reportByDateRange", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
+                        get: {method: 'GET', params: {},isArray: true,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     })
                 };
             }];
