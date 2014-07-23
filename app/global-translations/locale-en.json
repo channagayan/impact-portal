@@ -329,6 +329,8 @@
     "label.heading.community": "Community",
     "label.heading.news": "Latest News",
     "label.heading.amountdisbursedfortoday":"Amount Disbursed for Today",
+    "label.heading.par1":"PAR 1 Value(%)",
+    "label.heading.par30":"PAR 30 Value(%)",
     "label.heading.loginname":"Login Name",
     "label.heading.userprofile":"User Profile",
     "label.heading.userid":"User ID",
@@ -348,6 +350,7 @@
     "label.heading.search":"Search",
     "label.heading.help":"Help",
     "label.heading.noofclients":"Number Of Clients",
+    "label.heading.savingsamountnow":"Savings Amount As Of Now",
 
     "#Menu Links": "..",
     "label.menu.office": "Office",

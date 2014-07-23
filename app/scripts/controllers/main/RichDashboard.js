@@ -122,7 +122,7 @@
                     return colorArrayPie[i];
                 };
             };
-            scope.clientsPieData=[
+            /*scope.clientsPieData=[
                 { key: "One", y: 5 },
                 { key: "Two", y: 2 },
                 { key: "Three", y: 9 },
@@ -130,7 +130,7 @@
                 { key: "Five", y: 4 },
                 { key: "Six", y: 3 },
                 { key: "Seven", y: 9 }
-            ];
+            ];*/
             /////////////////////////////////////////////////////////////////pie chart////////////////////////////
             function redrawPieChart() {
                 nv.addGraph(function () {

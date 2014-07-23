@@ -15,48 +15,28 @@
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <div style="height:250px;">
-                        <nvd3-multi-bar-chart
-                                data="loansData"
-                                id="barchart"
-                                width="800"
-                                height="380"
-                                color="colorFunction()"
-                                tooltips="true"
-                                showLegend="true">
+
+                        <div style="height:250px;" id="loansbarchart">
+
                             <svg></svg>
-                        </nvd3-multi-bar-chart>
-                    </div>
+
+
+                        </div>
+
                 </div>
             </div>
         </div>
         <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{'label.heading.noofclients' | translate}}
-                        <select class="form-control input-small-tooltip pull-right" name="office1" ng-change="getCollectionOffice()"
-                                id="office1" ng-model="officeIdCollection"
-                                data-ng-options="office.id as office.name for office in offices" value="{{office.id}}">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
-                        </select>
+                    <h3 class="panel-title">{{'label.heading.par30' | translate}}
+
                     </h3>
                 </div>
                 <div class="panel-body" style="min-height:310px;">
                     <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
-                    <div data-ng-show="!showCollectionerror" style="margin:-30px 40px 0;height: 310px;" >
-                        <nvd3-pie-chart
-                                data="collectedData3"
-                                id="piechart3"
-                                width="380"
-                                height="420"
-                                x="xFunction()"
-                                y="yFunction()"
-                                tooltips="true"
-                                donut="true"
-                                donutRatio=".015"
-                                color="colorFunctionPie()">
-                            <svg height="230"></svg>
-                        </nvd3-pie-chart>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="PAR30piechart">
+                        <svg></svg>
                     </div>
                 </div>
             </div>
@@ -91,31 +71,14 @@
         <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{'label.heading.amountdisbursedfortoday' | translate}}
-                        <select class="form-control input-small-tooltip pull-right"
-                                data-ng-options="office.id as office.name for office in offices" name="office2"
-                                data-ng-change="getDisbursementOffice()" value="{{office.id}}" id="office2"
-                                ng-model="officeIdDisbursed">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
-                        </select>
+                    <h3 class="panel-title">{{'label.heading.par1' | translate}}
+
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <h3 class="required panel-error" data-ng-show="showDisbursementerror">{{'label.nodata' | translate}}</h3>
-                    <div data-ng-show="!showDisbursementerror" style="margin:-42px 0 0;height: 242px;">
-                        <nvd3-pie-chart
-                                data="disbursedData"
-                                id="piechart2"
-                                width="425"
-                                height="375"
-                                x="xFunction()"
-                                y="yFunction()"
-                                tooltips="true"
-                                donut="true"
-                                donutRatio=".015"
-                                color="colorFunctionPie()">
-                            <svg height="200"></svg>
-                        </nvd3-pie-chart>
+                    <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="PAR1piechart">
+                        <svg></svg>
                     </div>
                 </div>
             </div>

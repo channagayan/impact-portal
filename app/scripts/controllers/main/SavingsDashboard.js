@@ -123,18 +123,7 @@
             };
 
 
-            scope.setSavingsData=function(tenantName){
-                resourceFactory.savingsAmountResource.get({reportDate:'2014-07-08',reportName:'Savings amount',tenantIdentifier:tenantName},function (data){
-                    scope.savings=data;
-                    scope.savingsValues=[];
-                    for(var i in scope.savings.dataPointValues){
-                            scope.savingsValues[i]=[scope.savings.dataPointValues[i].dataPointValues[1],scope.savings.dataPointValues[i].dataPointValues[0]];
-                    }
-                    console.log(tenantName);
-                    scope.savingsData=[{"key":data.tenantIdentifier,"values":scope.savingsValues}];
 
-                });
-            }
 
             /////////////////////////////////////////////////////////////////////////////line chart for savnings/////////////////////////
             function cleanResponse(resp) {
@@ -205,8 +194,104 @@
 
 
             /////////////////////////////////////////////////////////////////////////////end of line chart for savings//////////////////
+
+            /////////////////////////////////////////////////////////////////////////////savings amount bar chart///////////////////////
+            function redrawSavingsAmountChart() {
+                nv.addGraph(function () {
+                    var chart = nv.models.discreteBarChart()
+                            .x(function (d) {
+                                return d.label
+                            })
+                            .y(function (d) {
+                                return d.value
+                            })
+                            .staggerLabels(true)
+                            .tooltips(true)
+                            .showValues(true)
+                            .transitionDuration(1000)
+                        ;
+                    chart.yAxis
+                        .axisLabel('Savings Amount');
+                    chart.xAxis
+                        .axisLabel('Currency');
+                    chart.margin({bottom:75,left:100});
+
+                    d3.select('#savingsbarchart svg')
+                        .datum(scope.savingsData)
+                        .call(chart);
+
+                    nv.utils.windowResize(chart.update);
+
+                    return chart;
+                });
+            }
+
+            scope.setSavingsData=function(tenantName){
+                resourceFactory.savingsAmountResource.get({reportDate:'2014-07-08',reportName:'Savings amount',tenantIdentifier:tenantName},function (data){
+                    scope.savings=data;
+                    scope.savingsValues=[];
+                    for(var i in scope.savings.dataPointValues){
+                        scope.savingsValues.push({"label":scope.savings.dataPointValues[i].dataPointValues[1],"value":scope.savings.dataPointValues[i].dataPointValues[0]});
+                    }
+                    console.log(tenantName);
+                    scope.savingsData=[{"key":data.tenantIdentifier,"values":scope.savingsValues}];
+                    redrawSavingsAmountChart();
+                });
+            }
+
+            /////////////////////////////////////////////////////////////////////////////end of savings amount bar chart////////////////
+
+
+            ///////////////////////////////////////////////////////////////// savings pie chart////////////////////////////
+            function redrawSavingsPieChart() {
+                nv.addGraph(function () {
+                    var chart = nv.models.pieChart()
+                        .x(function (d) {
+                            return d.label
+                        })
+                        .y(function (d) {
+                            return d.value
+                        })
+                        .showLabels(true);
+                    chart.margin({top: 200});
+
+
+                    d3.select("#savingspiechart svg")
+                        .datum(scope.savingspieData)
+                        .transition().duration(350)
+                        .call(chart);
+
+                    return chart;
+                });
+            }
+            scope.savingspieData=[];
+            function setSavingsPieData(){
+                for(var i in scope.tenantNames){
+                    resourceFactory.savingsAmountResource.get({ reportDate:'2014-06-06', reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+                        scope.savings = cleanResponse(data);
+                        var total=0;
+                        for(var t in scope.savings.dataPointValues){
+                            total+=parseInt(scope.savings.dataPointValues[t].dataPointValues[0]);
+                        }
+                       
+                        scope.savingspieData.push({
+                            "label": scope.savings.tenantIdentifier,
+                            "value" : total
+                        });
+                        //console.log(scope.clientspieData);
+                        redrawSavingsPieChart();
+                    });
+                }
+            }
+
+
+            ////////////////////////////////////////////////end of savings pie chart/////////////////////////////////////////////
+
+
+
             scope.setTotalSavingsAmount("default");
             scope.setSavingsData(scope.currentTenant);
+            setSavingsPieData();
             //console.log(scope.savingsData);
 
         }
