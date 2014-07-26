@@ -273,7 +273,7 @@
                         for(var t in scope.savings.dataPointValues){
                             total+=parseInt(scope.savings.dataPointValues[t].dataPointValues[0]);
                         }
-                       
+
                         scope.savingspieData.push({
                             "label": scope.savings.tenantIdentifier,
                             "value" : total
