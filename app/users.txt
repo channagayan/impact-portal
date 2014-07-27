@@ -1,0 +1,14 @@
+{
+  "users":[
+      {"userName":"mifos", "tenants":[
+                                    {"tenant":"default"},
+                                    {"tenant":"internaldemo"}
+                                    ]
+      },
+      {"userName":"mifosuser", "tenants":[
+                                           {"tenant":"default"},
+                                           {"tenant":"internaldemo"}
+                                           ]
+      }
+  ]
+}

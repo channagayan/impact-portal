@@ -3,6 +3,7 @@
         ResourceFactoryProvider: function () {
             var baseUrl = "" , apiVer = "/mifosng-provider/api/v1", tenantIdentifier = "";
             var currentTenant="";
+            var userName="";
             this.setBaseUrl = function (url) {
                 baseUrl = url;
             };
@@ -13,6 +14,8 @@
             this.setTenantIdenetifier = function (tenant) {
                 tenantIdentifier = tenant;
             }
+
+
             this.$get = ['$resource', '$rootScope', function (resource, $rootScope) {
                 var defineResource = function (url, paramDefaults, actions) {
                     var tempUrl = baseUrl;
@@ -20,7 +23,17 @@
                     $rootScope.tenantIdentifier = tenantIdentifier;
                     return resource(baseUrl + url, paramDefaults, actions);
                 };
+                var defineResourceForUsers=function (url, paramDefaults, actions) {
+                    return resource(url);
+                };
+
                 return {
+                    getUserName:function(){
+                        return userName;
+                    },
+                    setUserName:function(username){
+                        userName=username;
+                    },
                     userResource: defineResource(apiVer + "/users/:userId", {userId: '@userId'}, {
                         getAllUsers: {method: 'GET', params: {fields: "id,firstname,lastname,username,officeName"}, isArray: true},
                         getUser: {method: 'GET', params: {}}
@@ -406,7 +419,11 @@
                     }),
                     PAR30Resource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
+                    }),
+                    testResource: defineResourceForUsers("users.txt", {
+                        get: {method: 'GET',isArray:false,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     })
+
                 };
             }];
         }
@@ -415,5 +432,6 @@
         $provide.provider('ResourceFactory', mifosX.services.ResourceFactoryProvider);
     }).run(function ($log) {
         $log.info("ResourceFactory initialized");
+
     });
 }(mifosX.services || {}));

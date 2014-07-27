@@ -1,7 +1,9 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         RichDashboard: function (scope, resourceFactory, localStorageService, $rootScope, location) {
-            scope.tenantNames=["internaldemo","default"];
+
+
+            scope.tenantNames=[];
             scope.currentTenant="default";
         	scope.recent = [];
             scope.recent = localStorageService.get('Location');
@@ -12,6 +14,30 @@
             scope.searchParams = [];
             scope.recents = [];
             scope.dashModel = 'dashboard';
+
+            function getUserDetails(userName){
+
+                resourceFactory.testResource.get( function (data) {
+                    scope.userdata=cleanResponse(data);
+
+                    for(var user in scope.userdata.users ){
+
+                        if(scope.userdata.users[user].userName==userName){
+
+                            for(var tenant in scope.userdata.users[user].tenants){
+                                scope.tenantNames.push(scope.userdata.users[user].tenants[tenant].tenant);
+
+                                                                //redrawPieChart();
+                            }
+
+                            setClientsPieData();
+                        }
+
+                    }
+                });
+            }
+
+            getUserDetails(resourceFactory.getUserName());
             
             scope.switch = function() {
 	        	location.path('/richdashboard');
@@ -122,15 +148,7 @@
                     return colorArrayPie[i];
                 };
             };
-            /*scope.clientsPieData=[
-                { key: "One", y: 5 },
-                { key: "Two", y: 2 },
-                { key: "Three", y: 9 },
-                { key: "Four", y: 7 },
-                { key: "Five", y: 4 },
-                { key: "Six", y: 3 },
-                { key: "Seven", y: 9 }
-            ];*/
+
             /////////////////////////////////////////////////////////////////pie chart////////////////////////////
             function redrawPieChart() {
                 nv.addGraph(function () {
@@ -162,7 +180,7 @@
                     "label": data.tenantIdentifier,
                     "value" : data.dataPointValues[0].dataPointValues[0]
                 });
-                //console.log(scope.clientspieData);
+
                 redrawPieChart();
             });
                 }
@@ -176,9 +194,7 @@
 
             scope.getNoOfClients=function(tenantName) {
                 var data23= [];
-               // for (var j = 0; j < 2; j++) {
-                    //if(j==0)tenantName="default";
-                   // else tenantName="internaldemo";
+
                     resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: tenantName}, function (data) {
                         scope.noOfClients = cleanResponse(data);
                         scope.clientsValues = [];
@@ -197,7 +213,7 @@
                             return series;
                         });
                         redrawClientslineChart();
-                        console.log(scope.data23);
+
 
                     });
 
@@ -238,12 +254,14 @@
 
 
 
+
             scope.getNoOfClients(scope.currentTenant);
             setClientsPieData();
 
         }
     });
     mifosX.ng.application.controller('RichDashboard', ['$scope', 'ResourceFactory', 'localStorageService', '$rootScope', '$location', mifosX.controllers.RichDashboard]).run(function ($log) {
+
         $log.info("RichDashboard initialized");
     });
 }(mifosX.controllers || {}));

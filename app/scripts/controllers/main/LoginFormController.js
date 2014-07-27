@@ -4,10 +4,12 @@
             scope.loginCredentials = {};
             scope.passwordDetails = {};
             scope.authenticationFailed = false;
-
+           scope.getusername=function(){
+               return "channa";
+           }
             scope.login = function () {
                 authenticationService.authenticateWithUsernamePassword(scope.loginCredentials);
-               // delete scope.loginCredentials.password;
+              resourceFactory.setUserName(scope.loginCredentials.username);
             };
 
             scope.$on("UserAuthenticationFailureEvent", function (event, data) {

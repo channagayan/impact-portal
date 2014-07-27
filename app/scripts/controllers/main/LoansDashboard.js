@@ -1,7 +1,7 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         LoansDashboard: function (scope, resourceFactory, localStorageService, $rootScope, location) {
-            scope.tenantNames=["internaldemo","default"];
+            scope.tenantNames=[];
             scope.currentTenant="default";
         	scope.recent = [];
             scope.recent = localStorageService.get('Location');
@@ -12,6 +12,28 @@
             scope.searchParams = [];
             scope.recents = [];
             scope.dashModel = 'dashboard';
+
+            function getUserDetails(userName){
+
+                resourceFactory.testResource.get( function (data) {
+                    scope.userdata=cleanResponse(data);
+                    for(var user in scope.userdata.users ){
+
+                        if(scope.userdata.users[user].userName==userName){
+
+                            for(var tenant in scope.userdata.users[user].tenants){
+                                scope.tenantNames.push(scope.userdata.users[user].tenants[tenant].tenant);
+                            }
+                            setPAR1PieData();
+                            setPAR30PieData();
+
+                        }
+
+                    }
+                });
+            }
+
+            getUserDetails(resourceFactory.getUserName());
             
             scope.switch = function() {
 	        	location.path('/richdashboard');
