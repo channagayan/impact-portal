@@ -34,7 +34,14 @@
             }
 
             getUserDetails(resourceFactory.getUserName());
-            
+            function formatDate(Date){
+                formatedDate="";
+                var year=Date.getFullYear();
+                var month=Date.getMonth()+1;
+                var day=Date.getDate();
+                formatedDate=year+"-"+month+"-"+day;
+                return formatedDate;
+            };
             scope.switch = function() {
 	        	location.path('/richdashboard');
 			}

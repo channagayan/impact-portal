@@ -46,7 +46,14 @@
             scope.switch = function() {
 	        	location.path('/richdashboard');
 			}
-            
+            function formatDate(Date){
+                formatedDate="";
+                var year=Date.getFullYear();
+                var month=Date.getMonth()+1;
+                var day=Date.getDate();
+                formatedDate=year+"-"+month+"-"+day;
+                return formatedDate;
+            };
             scope.$on("UserAuthenticationSuccessEvent", function (event, data) {
 	            if (sessionManager.get(data)) {
 	                scope.currentSession = sessionManager.get(data);
@@ -196,26 +203,7 @@
             function cleanResponse(resp) {
                 return JSON.parse(angular.toJson(resp));
             };
-            /*scope.data23=[];
-            scope.data23.map=function (series) {
-                series.values = series.values.map(function (d) {
-                    return {x: d[0], y: d[1], label1: d[2] }
-                });
-                return series;
-            }*/
 
-            /*data23.prototype.map=function (series) {
-                series.values = series.values.map(function (d) {
-                    return {x: d[0], y: d[1], label1: d[2] }
-                });
-                return series;
-            };*/
-            /*data23.map=function (series) {
-                series.values = series.values.map(function (d) {
-                    return {x: d[0], y: d[1], label1: d[2] }
-                });
-                return series;
-            }*/
             scope.getNoOfClients=function(tenantName) {
                 var data23= [];
 
@@ -334,6 +322,10 @@
             //setClientsPieData();
             scope.getNoOfClients("default");
             //redrawClientslineChart();
+           /* var d = new Date();
+            d.setDate(d.getDate() - 1);
+            console.log(formatDate(d));
+            console.log(d.getMonth());*/
 
         }
     });
