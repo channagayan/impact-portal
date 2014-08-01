@@ -425,6 +425,9 @@
                     }),
                     activeClientsResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
+                    }),
+                    loansAmountResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                        get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     })
 
                 };

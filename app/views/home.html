@@ -1,8 +1,115 @@
-<div class="col-md-12" data-ng-switch="currentSession.user != null">
-    <div data-ng-switch-when="true">
-        <div data-ng-include="'views/private/home_' + currentSession.user.getHomePageIdentifier() + '.html'"></div>
+<div id="expertsearch" class="col-md-12" data-ng-controller="HomeDashboard">
+    <h3 class="paddedleft"><strong>{{'label.heading.dashboard' | translate}}</strong>
+    </h3>
+    <hr/>
+    <div class="clear"><br></div>
+    <div class="row">
+        <div class="col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'label.heading.noofclients' | translate}}
+
+                    </h3>
+                </div>
+                <div class="panel-body" style="min-height:310px;">
+                    <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="clientspiechart">
+                        <svg></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'label.heading.savingsamountnow' | translate}}
+
+                    </h3>
+                </div>
+                <div class="panel-body" style="min-height:310px;">
+                    <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="savingspiechart" >
+
+
+                        <svg></svg>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'label.heading.loansamountnow' | translate}}
+
+                    </h3>
+                </div>
+                <div class="panel-body" style="min-height:310px;">
+                    <h3 class="required panel-error" data-ng-show="showCollectionerror">{{'label.nodata' | translate}}</h3>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="loanspiechart" >
+
+
+                        <svg></svg>
+
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
     </div>
-    <div data-ng-switch-default>
-        <p>{{'label.youneedtologintoaccessthisarea' | translate}}</p>
+    <div id="home" class="row">
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="icon-bolt"></i>{{'label.heading.recentactivities' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#{{recent}}" data-ng-repeat="recent in recents" class="list-group-item">
+                            {{recent | UrlToString | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title"><i class="icon-laptop"></i>{{'label.heading.frequentactivities' | translate}}</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="list-group">
+                        <a href="#{{freq}}" data-ng-repeat="freq in frequent" class="list-group-item">
+                            {{freq | UrlToString | translate}}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">{{'label.heading.currentactiveclients' | translate}}
+                        <select ng-model="currentTenant" ng-options="tenantName for tenantName in tenantNames" ng-change="setActiveClientsPieData(currentTenant)"
+                                class="form-control input-small-tooltip pull-right">
+
+                        </select>
+                    </h3>
+                </div>
+                <div class="panel-body">
+                    <h3 class="required panel-error" data-ng-show="showDisbursementerror">{{'label.nodata' | translate}}</h3>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="activeclientspiechart">
+                        <svg></svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div ng-controller="HomeDashboard">
+        <nvd3 options="noOfClientsChartOptions" data="noOfClientsChartData"></nvd3>
     </div>
 </div>

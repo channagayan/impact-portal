@@ -198,6 +198,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'main/ExpertSearchController',
             'main/RichDashboard',
             'main/SavingsDashboard',
+            'main/HomeDashboard',
             'main/LoansDashboard',
             'main/ProfileController',
             'main/ViewMakerCheckerTaskController',

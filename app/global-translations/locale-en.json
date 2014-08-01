@@ -351,6 +351,7 @@
     "label.heading.search":"Search",
     "label.heading.help":"Help",
     "label.heading.noofclients":"Current Number Of Clients",
+    "label.heading.loansamountnow":"Current Loan Amount",
     "label.heading.savingsamountnow":"Current Savings Amount",
 
     "#Menu Links": "..",
