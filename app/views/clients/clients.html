@@ -78,38 +78,24 @@
                 </div>
             </div>
         </div>
-       <!-- <div class="col-sm-4 col-md-4">
+        <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{'label.heading.amountdisbursedfortoday' | translate}}
-                        <select class="form-control input-small-tooltip pull-right"
-                                data-ng-options="office.id as office.name for office in offices" name="office2"
-                                data-ng-change="getDisbursementOffice()" value="{{office.id}}" id="office2"
-                                ng-model="officeIdDisbursed">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
+                    <h3 class="panel-title">{{'label.heading.currentactiveclients' | translate}}
+                        <select ng-model="currentTenant" ng-options="tenantName for tenantName in tenantNames" ng-change="setActiveClientsPieData(currentTenant)"
+                                class="form-control input-small-tooltip pull-right">
+
                         </select>
                     </h3>
                 </div>
                 <div class="panel-body">
                     <h3 class="required panel-error" data-ng-show="showDisbursementerror">{{'label.nodata' | translate}}</h3>
-                    <div data-ng-show="!showDisbursementerror" style="margin:-42px 0 0;height: 242px;">
-                        <nvd3-pie-chart
-                                data="disbursedData"
-                                id="piechart2"
-                                width="425"
-                                height="375"
-                                x="xFunction()"
-                                y="yFunction()"
-                                tooltips="true"
-                                donut="true"
-                                donutRatio=".015"
-                                color="colorFunctionPie()">
-                            <svg height="200"></svg>
-                        </nvd3-pie-chart>
+                    <div  style="margin:0px 40px 0;height: 310px;" id="activeclientspiechart">
+                        <svg></svg>
                     </div>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
     <div ng-controller="RichDashboard">
     <nvd3 options="noOfClientsChartOptions" data="noOfClientsChartData"></nvd3>

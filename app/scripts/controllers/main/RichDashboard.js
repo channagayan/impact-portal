@@ -31,6 +31,10 @@
                             }
 
                             setClientsPieData();
+                            scope.setActiveClientsPieData(scope.currentTenant);
+
+                            //getNoOfClients();
+
                         }
 
                     }
@@ -173,6 +177,7 @@
             }
             scope.clientspieData=[];
             function setClientsPieData(){
+               // console.log(scope.tenantNames);
                 for(var i in scope.tenantNames){
             resourceFactory.noOfClientsResource.get({ reportDate:'2014-06-06', reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[i]}, function (data) {
 
@@ -191,35 +196,53 @@
             function cleanResponse(resp) {
                 return JSON.parse(angular.toJson(resp));
             };
+            /*scope.data23=[];
+            scope.data23.map=function (series) {
+                series.values = series.values.map(function (d) {
+                    return {x: d[0], y: d[1], label1: d[2] }
+                });
+                return series;
+            }*/
 
+            /*data23.prototype.map=function (series) {
+                series.values = series.values.map(function (d) {
+                    return {x: d[0], y: d[1], label1: d[2] }
+                });
+                return series;
+            };*/
+            /*data23.map=function (series) {
+                series.values = series.values.map(function (d) {
+                    return {x: d[0], y: d[1], label1: d[2] }
+                });
+                return series;
+            }*/
             scope.getNoOfClients=function(tenantName) {
                 var data23= [];
 
-                    resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: tenantName}, function (data) {
-                        scope.noOfClients = cleanResponse(data);
-                        scope.clientsValues = [];
-                        for (var i in scope.noOfClients) {
-                            scope.clientsValues[i] = [1, parseInt(scope.noOfClients[i].dataPointValues[0].dataPointValues[0]), scope.noOfClients[i].dateCaptured];
-                        }
-                        data23.push({
-                            "key": scope.noOfClients[0].tenantIdentifier,
-                            "values": scope.clientsValues
-                        });
 
-                        scope.data23 = data23.map(function (series) {
-                            series.values = series.values.map(function (d) {
-                                return {x: d[0], y: d[1], label1: d[2] }
-                            });
-                            return series;
-                        });
-                        redrawClientslineChart();
-
-
+                resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: tenantName}, function (data) {
+                    scope.noOfClients = cleanResponse(data);
+                    scope.clientsValues = [];
+                    for (var i in scope.noOfClients) {
+                        scope.clientsValues[i] = [1, parseInt(scope.noOfClients[i].dataPointValues[0].dataPointValues[0]), scope.noOfClients[i].dateCaptured];
+                    }
+                    data23.push({
+                        "key": scope.noOfClients[0].tenantIdentifier,
+                        "values": scope.clientsValues
                     });
 
-                };
+                    scope.data23 = data23.map(function (series) {
+                        series.values = series.values.map(function (d) {
+                            return {x: d[0], y: d[1], label1: d[2] }
+                        });
+                        return series;
+                    });
+                    redrawClientslineChart();
 
 
+                });
+
+            };
 
 
             ////this is for line chart
@@ -252,11 +275,65 @@
                 });
             };
 
+/////////////////////////////////////////////////////////////////Active clients pie chart////////////////////////////
+            function redrawActivePieChart() {
+                nv.addGraph(function () {
+                    var chart = nv.models.pieChart()
+                        .x(function (d) {
+                            return d.label
+                        })
+                        .y(function (d) {
+                            return d.value
+                        })
+                        .showLabels(true);
+                    chart.margin({top: 200});
+
+
+                    d3.select("#activeclientspiechart svg")
+                        .datum(scope.activeClientspieData)
+                        .transition().duration(350)
+                        .call(chart);
+
+                    return chart;
+                });
+            }
+
+            scope.setActiveClientsPieData=function (tenant){
+                scope.activeClientspieData=[];
+                    resourceFactory.noOfClientsResource.get({ reportDate:'2014-08-01', reportName: 'Active clients', tenantIdentifier: tenant}, function (data) {
+
+                        scope.activeClients=cleanResponse(data);
+
+                        var clientType=["Active","Non Funded","Prospects"]
+
+                            scope.activeClientspieData.push({
+                                "label": clientType[0],
+                                "value": scope.activeClients.dataPointValues[0].dataPointValues[1]
+                            });
+                            scope.activeClientspieData.push({
+                            "label": clientType[1],
+                            "value": scope.activeClients.dataPointValues[0].dataPointValues[2]
+                            });
+                            scope.activeClientspieData.push({
+                            "label": clientType[2],
+                            "value": scope.activeClients.dataPointValues[0].dataPointValues[3]
+                            });
+
+                        redrawActivePieChart();
+                    });
+
+            }
+
+
+            ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 
-            scope.getNoOfClients(scope.currentTenant);
-            setClientsPieData();
+            //redrawClientslineChart();
+            //console.log(scope.data23);
+            //setClientsPieData();
+            scope.getNoOfClients("default");
+            //redrawClientslineChart();
 
         }
     });

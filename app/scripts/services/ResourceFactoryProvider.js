@@ -422,6 +422,9 @@
                     }),
                     testResource: defineResourceForUsers("users.txt", {
                         get: {method: 'GET',isArray:false,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
+                    }),
+                    activeClientsResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                        get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     })
 
                 };
