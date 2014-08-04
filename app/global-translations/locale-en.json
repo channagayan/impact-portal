@@ -329,6 +329,8 @@
     "label.heading.community": "Community",
     "label.heading.news": "Latest News",
     "label.heading.amountdisbursedfortoday":"Amount Disbursed for Today",
+    "label.heading.savingsballance":"Current Savings Ballance",
+    "label.heading.branch":"Branch",
     "label.heading.currentactiveclients":"Current Active Clients",
     "label.heading.par1":"PAR 1 Value(%)",
     "label.heading.par30":"PAR 30 Value(%)",

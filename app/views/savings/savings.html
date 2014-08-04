@@ -73,37 +73,38 @@
             </div>
         </div>
 
-       <!-- <div class="col-sm-4 col-md-4">
+        <div class="col-sm-4 col-md-4">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">{{'label.heading.amountdisbursedfortoday' | translate}}
-                        <select class="form-control input-small-tooltip pull-right"
-                                data-ng-options="office.id as office.name for office in offices" name="office2"
-                                data-ng-change="getDisbursementOffice()" value="{{office.id}}" id="office2"
-                                ng-model="officeIdDisbursed">
-                            <option value="">--{{'label.menu.office' | translate}}--</option>
+                    <h3 class="panel-title">{{'label.heading.savingsballance' | translate}}
+                        <select ng-model="currentTenantSavingsbyOffice" ng-options="tenantName for tenantName in tenantNames" ng-change="setSavingsBallance(currentTenantSavingsbyOffice)"
+                                class="form-control input-small-tooltip pull-right">
+
                         </select>
                     </h3>
                 </div>
                 <div class="panel-body">
-                    <h3 class="required panel-error" data-ng-show="showDisbursementerror">{{'label.nodata' | translate}}</h3>
-                    <div data-ng-show="!showDisbursementerror" style="margin:-42px 0 0;height: 242px;">
-                        <nvd3-pie-chart
-                                data="disbursedData"
-                                id="piechart2"
-                                width="425"
-                                height="375"
-                                x="xFunction()"
-                                y="yFunction()"
-                                tooltips="true"
-                                donut="true"
-                                donutRatio=".015"
-                                color="colorFunctionPie()">
-                            <svg height="200"></svg>
-                        </nvd3-pie-chart>
-                    </div>
+                    <table class="table view-table table-bordered">
+                        <thead>
+                            <th>{{ 'label.heading.branch' | translate }}</th>
+                            <th>{{ 'label.heading.savingsballance' | translate }}</th>
+
+                        </thead>
+                        <tbody ng-repeat="savingsBallance in savingsBallances">
+                        <tr>
+                            <td>
+                                {{savingsBallance.branch}}
+                            </td>
+                            <td>
+                                {{savingsBallance.value}}
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+                    </table>
                 </div>
             </div>
-        </div>-->
+        </div>
     </div>
 </div>

@@ -3,6 +3,7 @@
         SavingsDashboard: function (scope, resourceFactory, localStorageService, $rootScope, location) {
             scope.tenantNames=[];
             scope.currentTenant="default";
+            scope.currentTenantSavingsbyOffice="default";
         	scope.recent = [];
             scope.recent = localStorageService.get('Location');
             scope.recentEight = [];
@@ -315,9 +316,22 @@
 
             ////////////////////////////////////////////////end of savings pie chart/////////////////////////////////////////////
 
+            //scope.savingsBallances=[{branch:"abranch",value:200},{branch:"bbranch",value:300}];
+            scope.setSavingsBallance=function(tenant){
+                scope.savingsBallances=[];
+                resourceFactory.savingsBallanceResource.get({ reportDate:'2014-08-01', reportName: 'Savings by office', tenantIdentifier:tenant}, function (data) {
+                  scope.tempSavingsBallance=cleanResponse(data);
+                    for(var i in scope.tempSavingsBallance.dataPointValues){
+                        scope.savingsBallances.push({
+                            branch:scope.tempSavingsBallance.dataPointValues[i].dataPointValues[0],
+                            value:scope.tempSavingsBallance.dataPointValues[i].dataPointValues[1]
+                        })
+                    }
+                });
+            }
 
-
-            scope.setTotalSavingsAmount("default");
+            //scope.setSavingsBallance("internaldemo");
+            scope.setTotalSavingsAmount(scope.currentTenant);
             scope.setSavingsData(scope.currentTenant);
             setSavingsPieData();
 
