@@ -32,6 +32,7 @@
 
                             setClientsPieData();
                             scope.setActiveClientsPieData(scope.currentTenant);
+                            scope.getNoOfClients();
 
                             //getNoOfClients();
 
@@ -204,33 +205,29 @@
                 return JSON.parse(angular.toJson(resp));
             };
 
-            scope.getNoOfClients=function(tenantName) {
-                var data23= [];
+            scope.getNoOfClients=function() {
 
 
-                resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: tenantName}, function (data) {
+                scope.data23=[];
+                for(var t in scope.tenantNames){
+                resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[t]}, function (data) {
                     scope.noOfClients = cleanResponse(data);
-                    scope.clientsValues = [];
+
+                    var clientValues=[];
                     for (var i in scope.noOfClients) {
-                        scope.clientsValues[i] = [1, parseInt(scope.noOfClients[i].dataPointValues[0].dataPointValues[0]), scope.noOfClients[i].dateCaptured];
+                        clientValues.push({x:1, y:parseInt(scope.noOfClients[i].dataPointValues[0].dataPointValues[0]), label1:scope.noOfClients[i].dateCaptured});
                     }
-                    data23.push({
-                        "key": scope.noOfClients[0].tenantIdentifier,
-                        "values": scope.clientsValues
+                    scope.data23.push({
+                        "key":scope.noOfClients[0].tenantIdentifier,
+                        "values":clientValues
                     });
 
-                    scope.data23 = data23.map(function (series) {
-                        series.values = series.values.map(function (d) {
-                            return {x: d[0], y: d[1], label1: d[2] }
-                        });
-                        return series;
-                    });
                     redrawClientslineChart();
-
-
                 });
+          }
 
             };
+
 
 
             ////this is for line chart
@@ -241,10 +238,10 @@
                         .useInteractiveGuideline(true);
                     chart.width(700);
                     chart.margin({left:50});
-                    chart.color(['#2ca02c', 'darkred']);
+                    chart.color(['#2ca02c', 'darkred','darkblue']);
                     chart.x(function(d,i) { return i });
                     chart.xAxis
-                        .axisLabel('X axis')
+                        .axisLabel('Date')
                         .tickFormat(function(d) {
                             var label = scope.data23[0].values[d].label1;
                             return label;
@@ -316,16 +313,6 @@
             ///////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
-            //redrawClientslineChart();
-            //console.log(scope.data23);
-            //setClientsPieData();
-            scope.getNoOfClients("default");
-            //redrawClientslineChart();
-           /* var d = new Date();
-            d.setDate(d.getDate() - 1);
-            console.log(formatDate(d));
-            console.log(d.getMonth());*/
 
         }
     });

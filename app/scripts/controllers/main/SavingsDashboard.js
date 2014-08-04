@@ -26,6 +26,7 @@
                                 scope.tenantNames.push(scope.userdata.users[user].tenants[tenant].tenant);
                             }
                             setSavingsPieData();
+                            scope.setTotalSavingsAmount();
 
                         }
 
@@ -158,34 +159,29 @@
             function cleanResponse(resp) {
                 return JSON.parse(angular.toJson(resp));
             };
-            //scope.totalLoanAmountData=[];
-            scope.setTotalSavingsAmount=function(tenantName) {
-                var tempSavingsData=[];
-                resourceFactory.savingsAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Savings amount', tenantIdentifier: tenantName}, function (data) {
+            scope.setTotalSavingsAmount=function() {
+                scope.totalSavingsAmountData=[];
+
+                for(var s in scope.tenantNames){
+
+                resourceFactory.savingsAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[s]}, function (data) {
                     scope.savings = cleanResponse(data);
-                    scope.savingsValues=[];
+                    var savingsValues=[];
                     for (var i in scope.savings) {
                         var totalSavingsInOneRecord=0;
                         for(var j in scope.savings[i].dataPointValues){
                             totalSavingsInOneRecord+=parseInt(scope.savings[i].dataPointValues[j].dataPointValues[0]);
                         }
-                        //console.log(totalLoanInOneRecord);
-                        scope.savingsValues[i] = [1,totalSavingsInOneRecord, scope.savings[i].dateCaptured];
+                        savingsValues.push({x:1,y:totalSavingsInOneRecord, label1:scope.savings[i].dateCaptured});
                     }
-                    tempSavingsData.push({
+                    scope.totalSavingsAmountData.push({
                         "key": scope.savings[0].tenantIdentifier,
-                        "values": scope.savingsValues
+                        "values": savingsValues
                     });
-                    scope.totalSavingsAmountData=tempSavingsData.map(function (series) {
-                        series.values = series.values.map(function (d) {
-                            return {x: d[0], y: d[1], label1: d[2] }
-                        });
-                        return series;
-                    });
-
                     redrawTotalSavingsAmountChart();
-                });
 
+                });
+      }
             };
 
 
@@ -199,7 +195,7 @@
                         .useInteractiveGuideline(true);
                     chart.width(700);
                     chart.margin({left:100});
-                    chart.color(['darkred', 'darkblue']);
+                    chart.color(['#2ca02c','darkred', 'darkblue']);
                     chart.x(function(d,i) { return i });
                     chart.xAxis
                         .axisLabel('Date')
@@ -331,7 +327,7 @@
             }
 
             //scope.setSavingsBallance("internaldemo");
-            scope.setTotalSavingsAmount(scope.currentTenant);
+            //scope.setTotalSavingsAmount(scope.currentTenant);
             scope.setSavingsData(scope.currentTenant);
             setSavingsPieData();
 

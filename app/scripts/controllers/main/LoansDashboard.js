@@ -26,6 +26,7 @@
                             }
                             setPAR1PieData();
                             setPAR30PieData();
+                            scope.setTotalLoanAmount();
 
                         }
 
@@ -149,51 +150,34 @@
                 };
             };
 
-            /*scope.setLoansData=function(tenantName){
-                resourceFactory.loansResource.get({reportDate:'2014-07-08',reportName:'Outstanding loans',tenantIdentifier:tenantName},function (data){
-                    scope.loans=data;
-                    scope.loansValues=[];
-                    for(var i in scope.loans.dataPointValues){
-                        scope.loansValues[i]=[scope.loans.dataPointValues[i].dataPointValues[1],scope.loans.dataPointValues[i].dataPointValues[0]];
-                    }
-                    //console.log(tenantName);
-                    scope.loansData=[{"key":data.tenantIdentifier,"values":scope.loansValues}];
 
-                });
-            }*/
 
 
             /////////////////////////////////////////////////////////////////////////////line chart for loans/////////////////////////
             function cleanResponse(resp) {
                 return JSON.parse(angular.toJson(resp));
             };
-            //scope.totalLoanAmountData=[];
-            scope.setTotalLoanAmount=function(tenantName) {
-                var tempLoanData=[];
-                resourceFactory.loanAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Outstanding loans', tenantIdentifier: tenantName}, function (data) {
+            scope.setTotalLoanAmount=function() {
+                scope.totalLoanAmountData=[];
+                for(var l in scope.tenantNames){
+                resourceFactory.loanAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Outstanding loans', tenantIdentifier: scope.tenantNames[l]}, function (data) {
                     scope.loans = cleanResponse(data);
-                    scope.loanValues=[];
+                    var loanValues=[];
                     for (var i in scope.loans) {
                         var totalLoanInOneRecord=0;
                         for(var j in scope.loans[i].dataPointValues){
                              totalLoanInOneRecord+=parseInt(scope.loans[i].dataPointValues[j].dataPointValues[0]);
                         }
-                        //console.log(totalLoanInOneRecord);
-                        scope.loanValues[i] = [1,totalLoanInOneRecord, scope.loans[i].dateCaptured];
+                        loanValues.push({x:1,y:totalLoanInOneRecord, label1:scope.loans[i].dateCaptured});
                     }
-                    tempLoanData.push({
+                    scope.totalLoanAmountData.push({
                         "key": scope.loans[0].tenantIdentifier,
-                        "values": scope.loanValues
-                    });
-                    scope.totalLoanAmountData=tempLoanData.map(function (series) {
-                        series.values = series.values.map(function (d) {
-                            return {x: d[0], y: d[1], label1: d[2] }
-                        });
-                        return series;
+                        "values": loanValues
                     });
 
                     redrawTotalLoanAmountChart();
                 });
+           }
 
             };
 
@@ -208,7 +192,7 @@
                         .useInteractiveGuideline(true);
                     chart.width(700);
                     chart.margin({left:100});
-                    chart.color(['#2ca02c', 'darkred']);
+                    chart.color(['#2ca02c', 'darkred','darkblue']);
                     chart.x(function(d,i) { return i });
                     chart.xAxis
                         .axisLabel('Date')
@@ -353,7 +337,7 @@
             }
 
             /////////////////////////////////////////////////////////////////////////////end of loans amount bar chart////////////////
-            scope.setTotalLoanAmount("default");
+           // scope.setTotalLoanAmount("default");
             scope.setLoansData("default");
             setPAR1PieData();
             setPAR30PieData();
