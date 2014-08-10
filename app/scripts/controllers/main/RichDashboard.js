@@ -187,7 +187,7 @@
             function setClientsPieData(){
                // console.log(scope.tenantNames);
                 for(var i in scope.tenantNames){
-            resourceFactory.noOfClientsResource.get({ reportDate:'2014-06-06', reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+            resourceFactory.noOfClientsResource.get({ reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[i]}, function (data) {
 
                 scope.clientspieData.push({
                     "label": data.tenantIdentifier,
@@ -207,10 +207,12 @@
 
             scope.getNoOfClients=function() {
 
-
+                var today = new Date();
+                var dayBeforeTwoMonths=new Date();
+                dayBeforeTwoMonths.setDate(today.getDate() - 60);
                 scope.data23=[];
                 for(var t in scope.tenantNames){
-                resourceFactory.noOfClientsByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[t]}, function (data) {
+                resourceFactory.noOfClientsByDateResource.get({reportStartDate: formatDate(dayBeforeTwoMonths), reportEndDate: formatDate(today), reportName: 'Number of Clients', tenantIdentifier: scope.tenantNames[t]}, function (data) {
                     scope.noOfClients = cleanResponse(data);
 
                     var clientValues=[];
@@ -285,7 +287,7 @@
 
             scope.setActiveClientsPieData=function (tenant){
                 scope.activeClientspieData=[];
-                    resourceFactory.noOfClientsResource.get({ reportDate:'2014-08-01', reportName: 'Active clients', tenantIdentifier: tenant}, function (data) {
+                    resourceFactory.noOfClientsResource.get({ reportName: 'Active clients', tenantIdentifier: tenant}, function (data) {
 
                         scope.activeClients=cleanResponse(data);
 

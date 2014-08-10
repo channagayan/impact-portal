@@ -161,10 +161,12 @@
             };
             scope.setTotalSavingsAmount=function() {
                 scope.totalSavingsAmountData=[];
-
+                var today = new Date();
+                var dayBeforeTwoMonths=new Date();
+                dayBeforeTwoMonths.setDate(today.getDate() - 60);
                 for(var s in scope.tenantNames){
 
-                resourceFactory.savingsAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[s]}, function (data) {
+                resourceFactory.savingsAmountByDateResource.get({reportStartDate: formatDate(dayBeforeTwoMonths), reportEndDate: formatDate(today), reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[s]}, function (data) {
                     scope.savings = cleanResponse(data);
                     var savingsValues=[];
                     for (var i in scope.savings) {
@@ -252,7 +254,7 @@
             }
 
             scope.setSavingsData=function(tenantName){
-                resourceFactory.savingsAmountResource.get({reportDate:'2014-07-08',reportName:'Savings amount',tenantIdentifier:tenantName},function (data){
+                resourceFactory.savingsAmountResource.get({reportName:'Savings amount',tenantIdentifier:tenantName},function (data){
                     scope.savings=data;
                     scope.savingsValues=[];
                     for(var i in scope.savings.dataPointValues){
@@ -292,7 +294,7 @@
             scope.savingspieData=[];
             function setSavingsPieData(){
                 for(var i in scope.tenantNames){
-                    resourceFactory.savingsAmountResource.get({ reportDate:'2014-06-06', reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+                    resourceFactory.savingsAmountResource.get({  reportName: 'Savings amount', tenantIdentifier: scope.tenantNames[i]}, function (data) {
                         scope.savings = cleanResponse(data);
                         var total=0;
                         for(var t in scope.savings.dataPointValues){
@@ -303,7 +305,7 @@
                             "label": scope.savings.tenantIdentifier,
                             "value" : total
                         });
-                        //console.log(scope.clientspieData);
+
                         redrawSavingsPieChart();
                     });
                 }
@@ -312,10 +314,10 @@
 
             ////////////////////////////////////////////////end of savings pie chart/////////////////////////////////////////////
 
-            //scope.savingsBallances=[{branch:"abranch",value:200},{branch:"bbranch",value:300}];
+
             scope.setSavingsBallance=function(tenant){
                 scope.savingsBallances=[];
-                resourceFactory.savingsBallanceResource.get({ reportDate:'2014-08-01', reportName: 'Savings by office', tenantIdentifier:tenant}, function (data) {
+                resourceFactory.savingsBallanceResource.get({  reportName: 'Savings by office', tenantIdentifier:tenant}, function (data) {
                   scope.tempSavingsBallance=cleanResponse(data);
                     for(var i in scope.tempSavingsBallance.dataPointValues){
                         scope.savingsBallances.push({
@@ -326,8 +328,7 @@
                 });
             }
 
-            //scope.setSavingsBallance("internaldemo");
-            //scope.setTotalSavingsAmount(scope.currentTenant);
+
             scope.setSavingsData(scope.currentTenant);
             setSavingsPieData();
 

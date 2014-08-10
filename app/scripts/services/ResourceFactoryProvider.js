@@ -396,13 +396,13 @@
                     officeToGLAccountMappingTemplateResource: defineResource(apiVer + "/financialactivityaccounts/template", {}, {
                         get: {method: 'GET', params: {}}
                     }),
-                    noOfClientsResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                    noOfClientsResource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    savingsAmountResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                    savingsAmountResource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    loansResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                    loansResource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
                     noOfClientsByDateResource: defineResource(apiVer + "/client_impact_portal/reportByDateRange", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
@@ -414,22 +414,22 @@
                     savingsAmountByDateResource: defineResource(apiVer + "/client_impact_portal/reportByDateRange", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},isArray: true,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    PAR1Resource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
+                    PAR1Resource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    PAR30Resource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportName:'@reportName',reportStartDate: '@reportStartDate',reportEndDate:'@reportEndDate',tenantIdentifier:'@tenantIdentifier'}, {
+                    PAR30Resource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
                     testResource: defineResourceForUsers("users.txt", {
                         get: {method: 'GET',isArray:false,headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    activeClientsResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                    activeClientsResource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
                     loansAmountResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     }),
-                    savingsBallanceResource: defineResource(apiVer + "/client_impact_portal/reportByDate", {reportDate: '@reportDate',reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
+                    savingsBallanceResource: defineResource(apiVer + "/client_impact_portal/latestReport", {reportName:'@reportName',tenantIdentifier:'@tenantIdentifier'}, {
                         get: {method: 'GET', params: {},headers: {'X-Mifos-Platform-TenantId':currentTenant}}
                     })
 

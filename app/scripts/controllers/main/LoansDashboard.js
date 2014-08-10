@@ -158,9 +158,12 @@
                 return JSON.parse(angular.toJson(resp));
             };
             scope.setTotalLoanAmount=function() {
+                var today = new Date();
+                var dayBeforeTwoMonths=new Date();
+                dayBeforeTwoMonths.setDate(today.getDate() - 60);
                 scope.totalLoanAmountData=[];
                 for(var l in scope.tenantNames){
-                resourceFactory.loanAmountByDateResource.get({reportStartDate: '2014-06-06', reportEndDate: '2014-07-22', reportName: 'Outstanding loans', tenantIdentifier: scope.tenantNames[l]}, function (data) {
+                resourceFactory.loanAmountByDateResource.get({reportStartDate: formatDate(dayBeforeTwoMonths), reportEndDate: formatDate(today), reportName: 'Outstanding loans', tenantIdentifier: scope.tenantNames[l]}, function (data) {
                     scope.loans = cleanResponse(data);
                     var loanValues=[];
                     for (var i in scope.loans) {
@@ -243,7 +246,7 @@
             scope.PAR1pieData=[];
             function setPAR1PieData(){
                 for(var i in scope.tenantNames){
-                    resourceFactory.PAR1Resource.get({ reportDate:'2014-06-06', reportName: 'PAR1', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+                    resourceFactory.PAR1Resource.get({  reportName: 'PAR1', tenantIdentifier: scope.tenantNames[i]}, function (data) {
 
                         scope.PAR1pieData.push({
                             "label": data.tenantIdentifier,
@@ -283,7 +286,7 @@
             scope.PAR30pieData=[];
             function setPAR30PieData(){
                 for(var i in scope.tenantNames){
-                    resourceFactory.PAR30Resource.get({ reportDate:'2014-06-06', reportName: 'PAR30', tenantIdentifier: scope.tenantNames[i]}, function (data) {
+                    resourceFactory.PAR30Resource.get({ reportName: 'PAR30', tenantIdentifier: scope.tenantNames[i]}, function (data) {
 
                         scope.PAR30pieData.push({
                             "label": data.tenantIdentifier,
@@ -325,7 +328,7 @@
             }
 
             scope.setLoansData=function(tenantName){
-                resourceFactory.loansResource.get({reportDate:'2014-07-08',reportName:'Outstanding loans',tenantIdentifier:tenantName},function (data){
+                resourceFactory.loansResource.get({reportName:'Outstanding loans',tenantIdentifier:tenantName},function (data){
                     scope.loans=data;
                     scope.loansValues=[];
                     for(var i in scope.loans.dataPointValues){
