@@ -11,13 +11,17 @@ This is the  web application built on top of the MifosX platform for the mifos i
 
 3. To download the dependencies, and be able to build, first install bower & grunt
 
+```
 npm install -g bower
 npm install -g grunt-cli
+```
 
 4. Next pull the runtime and build time dependencies by running bower and npm install commands on the project root folder
 
+```
 bower install
 npm install 
+```
 
 5. Adding associated tenants for each user
 
@@ -26,20 +30,26 @@ npm install
 	b. add associated tenants in JSON format
 	
 	example: 
+	```
 		{"userName":"mifos", "tenants":[
 		{"tenant":"default"},
 		{"tenant":"internaldemo"}
 		]}
+	```
 		
 	c. Save the file.
 	
 6. Build the code for production deployment. Execute the following command on root folder
 
+```
 grunt prod
+```
 
 7. To preview the app, run the following command on the project root folder
 
+```
 grunt serve
+```
 
 	Default username/password: mifos/password. select the server by adding server address as parameter in browser address bar.
 	Example: baseApiUrl=https://localhost:8443&tenantIdentifier=default
